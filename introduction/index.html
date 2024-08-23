@@ -188,25 +188,33 @@
 <h3 id="trust-networks">Trust Networks</h3>
 <p>Trust is a fundamental concept in the Circles protocol. It allows personal currencies to become valuable and transferable within the network. The trust system is implemented in the Hub contract through the following mechanisms:</p>
 <ul>
-<li>Users can establish trust relationships with other users using the <code>trust()</code> function.</li>
-<li>Trust relationships have expiration times, allowing for dynamic trust networks.</li>
-<li>The <code>isPermittedFlow()</code> function checks if a transfer is allowed based on the trust relationships between the sender, receiver, and the currency being transferred.</li>
+<li>People can establish trust relationships with other entities (people, organizations, or groups) using the <code>trust()</code> function.</li>
+<li>Trust relationships can be set with expiration times, allowing for dynamic trust networks. Alternatively, trust can be established indefinitely by setting the expiration to the maximum possible future time.</li>
+<li>The trust network is leveraged to enable transitive transfers of Circles along paths of trust. The <code>isPermittedFlow()</code> function verifies if a transitive transfer is permissible based on the trust relationships between the involved parties and the specific currency being transferred.</li>
+<li>Trust relationships can be established not only between individuals but also between people, organizations, and groups, creating a diverse and interconnected economic ecosystem.</li>
 </ul>
-<p>Trust networks enable:
-- Path-based transactions, where currencies can be exchanged through chains of trust.
-- Community-building, as users create economic connections with those they trust.
-- A decentralized approach to currency valuation and acceptance.</p>
+<p>Trust networks enable:</p>
+<ul>
+<li>Path-based transactions, where currencies can be exchanged through chains of trust connections.</li>
+<li>Community-building, as users create economic connections with individuals and entities they trust.</li>
+<li>A decentralized approach to currency valuation and acceptance, based on social and organizational relationships rather than centralized authority.</li>
+<li>Flexible economic interactions between various types of actors within the Circles ecosystem.</li>
+</ul>
 <h3 id="demurrage">Demurrage</h3>
-<p>Demurrage is an economic concept where the value of a currency decreases over time. In Circles, this is implemented to encourage circulation of the currency and discourage hoarding. The Circles contract includes a demurrage system with the following characteristics:</p>
+<p>Demurrage is an economic concept where the value of a currency decreases over time. In Circles, this is implemented to encourage circulation of the currency and discourage hoarding. Demurrage further ensures that all times in the future one hour can be issued as one Circle.</p>
+<p>By default all balances and transfer amounts as arguments in functions in the Hub contract are understood as demurraged amounts for the present day. However, to interact with other smart contracts it is often important to be able to interact with a static (ie. not rebalancing) token representation. Therefore Circles also offers a static, inflationary representation of all balances and transfer functions - both at the ERC1155 representation and in the ERC20 representation.</p>
+<p>The Circles contract includes a demurrage system with the following characteristics:</p>
 <ul>
 <li>Balances are stored as "discounted balances" that automatically decrease in value over time.</li>
-<li>The <code>_calculateIssuance()</code> function in the Circles contract accounts for demurrage when determining how much new currency to mint for a user.</li>
+<li>The <code>calculateIssuance()</code> function in the Circles contract accounts for demurrage when determining how much new currency to mint for a person.</li>
 <li>Demurrage applies to both personal currencies and group currencies.</li>
 </ul>
-<p>This system ensures that:
-- The currency remains active and circulating within the community.
-- Long-term storage of wealth is discouraged, promoting a more dynamic economy.
-- The basic income aspect of the system remains relevant, as users are incentivized to regularly engage with their personal currency.</p>
+<p>This system ensures that:</p>
+<ul>
+<li>The currency remains active and circulating within the community.</li>
+<li>Long-term storage of wealth is discouraged, promoting a more dynamic economy.</li>
+<li>The basic income aspect of the system remains relevant, as users are incentivized to regularly engage with their personal currency.</li>
+</ul>
 <p>By combining these key concepts - personal currencies, trust networks, and demurrage - Circles creates a unique economic system that aims to provide a basic income while fostering community connections and encouraging active participation in the local economy.</p>
               
             </div>
