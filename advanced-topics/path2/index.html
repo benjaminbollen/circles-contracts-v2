@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <link rel="shortcut icon" href="../../img/favicon.ico" />
+    <title>Path-based Transactions and Flow Matrices - Circles Protocol</title>
+    <link rel="stylesheet" href="../../css/theme.css" />
+    <link rel="stylesheet" href="../../css/theme_extra.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" />
+    
+      <script>
+        // Current page data
+        var mkdocs_page_name = "Path-based Transactions and Flow Matrices";
+        var mkdocs_page_input_path = "advanced-topics/path2.md";
+        var mkdocs_page_url = null;
+      </script>
+    
+    <!--[if lt IE 9]>
+      <script src="../../js/html5shiv.min.js"></script>
+    <![endif]-->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+      <script>hljs.highlightAll();</script> 
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+          <a href="../.." class="icon icon-home"> Circles Protocol
+        </a><div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+      <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../..">Home</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../../about/">About</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../../introduction/">Introduction</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../../architecture/">Architectural Overview</a>
+                </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Core Functionality</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../../core-functionality/">Overview</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../core-functionality/hub-contract/">Hub Contract</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../core-functionality/circles-contract/">Circles Contract</a>
+                  </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../../key-features/">Key Features</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../../contract-interactions/">Contract Interactions</a>
+                </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Advanced Topics</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../">Overview</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../inflation-demurrage/">Inflation and Demurrage</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../path-based-transactions/">Path-based Transactions</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../group-mint-policies/">Group Mint Policies</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">User Guides</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../../user-guides/">Overview</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../user-guides/registration/">Registration</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../user-guides/trust-management/">Trust Management</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../user-guides/minting-transferring/">Minting and Transferring</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../user-guides/group-currencies/">Group Currencies</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Developer Resources</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../../developer-resources/">Overview</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../developer-resources/contract-abis/">Contract ABIs</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../developer-resources/integration-guidelines/">Integration Guidelines</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../developer-resources/best-practices/">Best Practices</a>
+                  </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../../glossary/">Glossary</a>
+                </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Appendices</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../../appendices/">Overview</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../appendices/contract-addresses/">Contract Addresses</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../appendices/external-resources/">External Resources</a>
+                  </li>
+              </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+      <nav class="wy-nav-top" role="navigation" aria-label="Mobile navigation menu">
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../..">Circles Protocol</a>
+        
+      </nav>
+      <div class="wy-nav-content">
+        <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../.." class="icon icon-home" aria-label="Docs"></a></li>
+      <li class="breadcrumb-item active">Path-based Transactions and Flow Matrices</li>
+    <li class="wy-breadcrumbs-aside">
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+            <div class="section" itemprop="articleBody">
+              
+                <h1 id="path-based-transactions-and-flow-matrices">Path-based Transactions and Flow Matrices</h1>
+<p>In the Circles ecosystem, path-based transactions enable the transfer of Circles tokens between people who don't directly trust each other. This system utilizes flow matrices to represent and validate these complex transactions.</p>
+<h2 id="flow-matrix-structure">Flow Matrix Structure</h2>
+<p>A flow matrix consists of the following components:</p>
+<ol>
+<li><strong>Flow Vertices</strong>: An ordered list of avatar addresses that the transaction path touches.</li>
+<li><strong>Flow Edges</strong>: An array of structures, each representing a transfer of Circles tokens between two vertices.</li>
+<li><strong>Streams</strong>: Structures that define the terminal points of a transaction, including source, sink, and associated data.</li>
+<li><strong>Coordinates</strong>: Packed data representing the indices of Circles identifiers, senders, and receivers within the flow vertices array.</li>
+</ol>
+<h2 id="transaction-process">Transaction Process</h2>
+<p>The <code>operateFlowMatrix</code> function in the Hub contract orchestrates path-based transactions:</p>
+<ol>
+<li><strong>Unpacking Coordinates</strong>: The packed coordinates are expanded into an array of uint16 values.</li>
+<li><strong>Operator Authorization</strong>: Ensures the operator is approved for all source addresses in the streams.</li>
+<li><strong>Flow Matrix Verification</strong>: Checks the correctness of the flow matrix, including:</li>
+<li>Well-definedness of the matrix</li>
+<li>Registration of all entities</li>
+<li>Adherence to trust relationships</li>
+<li>
+<p>Calculation of netted flows</p>
+</li>
+<li>
+<p><strong>Path Transfers</strong>: Executes the individual transfers defined by the flow edges.</p>
+</li>
+<li><strong>Acceptance Checks</strong>: Calls acceptance checks for the streams and calculates the netted flows.</li>
+<li><strong>Flow Matching</strong>: Ensures the netted flows from the matrix and streams match.</li>
+</ol>
+<h2 id="key-functions">Key Functions</h2>
+<h3 id="_verifyflowmatrix">_verifyFlowMatrix</h3>
+<p>This function performs crucial checks on the flow matrix:</p>
+<ul>
+<li>Validates the length and order of flow vertices</li>
+<li>Ensures all vertices are registered avatars</li>
+<li>Verifies that each flow edge respects trust relationships</li>
+<li>Calculates the netted flow for each vertex</li>
+</ul>
+<h3 id="_effectpathtransfers">_effectPathTransfers</h3>
+<p>Executes the actual transfers defined by the flow edges:</p>
+<ul>
+<li>Handles both regular transfers and group mints</li>
+<li>Verifies the correct definition of streams</li>
+<li>Updates balances without triggering acceptance checks for intermediate transfers</li>
+</ul>
+<h3 id="_callacceptancechecks">_callAcceptanceChecks</h3>
+<p>Processes the final streams of the transaction:</p>
+<ul>
+<li>Calculates the total amounts for each stream</li>
+<li>Performs acceptance checks for the receiving addresses</li>
+<li>Emits <code>StreamCompleted</code> events for each successful stream</li>
+</ul>
+<h2 id="optimizations-and-constraints">Optimizations and Constraints</h2>
+<ul>
+<li>Uses packed coordinates to reduce gas costs</li>
+<li>Implements checks to prevent common errors and vulnerabilities</li>
+<li>Utilizes a non-reentrant modifier to prevent reentrancy attacks</li>
+</ul>
+<h2 id="implications-for-the-circles-ecosystem">Implications for the Circles Ecosystem</h2>
+<p>Path-based transactions allow for:</p>
+<ul>
+<li>Increased liquidity within the Circles network</li>
+<li>Facilitation of trades between people without direct trust relationships</li>
+<li>Complex, multi-step transactions executed atomically</li>
+</ul>
+<p>This system forms the backbone of Circles' unique approach to creating a decentralized basic income, enabling fluid value transfer while respecting individual trust boundaries.</p>
+              
+            </div>
+          </div><footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+          
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="Versions">
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    
+    
+    
+  </span>
+</div>
+    <script src="../../js/jquery-3.6.0.min.js"></script>
+    <script>var base_url = "../..";</script>
+    <script src="../../js/theme_extra.js"></script>
+    <script src="../../js/theme.js"></script>
+      <script src="../../search/main.js"></script>
+    <script>
+        jQuery(function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        });
+    </script>
+
+</body>
+</html>
