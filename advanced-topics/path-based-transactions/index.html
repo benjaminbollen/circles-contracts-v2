@@ -92,11 +92,11 @@
     </li>
     <li class="toctree-l4"><a class="reference internal" href="#stream-explanation">Stream Explanation</a>
     </li>
-    <li class="toctree-l4"><a class="reference internal" href="#net-flow-and-consistency-check">Net Flow and consistency check</a>
-    </li>
         </ul>
     </li>
         </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#net-flow-and-consistency-check">Net Flow and Consistency Check</a>
     </li>
     <li class="toctree-l2"><a class="reference internal" href="#technical-implementation">Technical Implementation</a>
         <ul>
@@ -296,10 +296,18 @@ E: Eva
 </ul>
 </li>
 </ul>
-<h4 id="net-flow-and-consistency-check">Net Flow and consistency check</h4>
+<h2 id="net-flow-and-consistency-check">Net Flow and Consistency Check</h2>
 <p>The net flow is not sent as input to the contracts, rather it is included in the diagram to illustrate the consistency check that the contract performs.
 For an explicit path of flow edges to be a valid solution to the set of intents expressed in the streams, it must hold that
 for every vertex the sum over all flow edges (modulo Circles Id) must equal the sum over all streams (ie. summing the columns).</p>
+<p>Streams themselves don't specify an amount though - both to compactify the representation but also to not over-determine the representation. Instead it is checked that for each stream:</p>
+<ul>
+<li>all the terminal edges that reference this stream have the same receiver.</li>
+<li>that each stream lists their terminal flow edge ids in ascending order.</li>
+<li>and that the count of terminal edges that reference a stream, matches the length of the <code>flowEdgeIds</code> array of that stream.</li>
+</ul>
+<p>By cross-referencing, and checking consistency we ensure that we can use the sum of the terminal edges for a stream as the amount intended to send by that stream.</p>
+<p>In our example, all streams only had one terminal flow edge, but in general a flow matrix can have multiple terminal flow edges for a single stream.</p>
 <h2 id="technical-implementation">Technical Implementation</h2>
 <p>The <code>Hub</code> contract implements path-based transactions through the <code>operateFlowMatrix</code> function. Let's break down its key components:</p>
 <h3 id="function-signature">Function Signature</h3>
