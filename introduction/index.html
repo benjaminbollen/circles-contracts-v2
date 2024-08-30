@@ -64,6 +64,8 @@
     </li>
         </ul>
     </li>
+    <li class="toctree-l2"><a class="reference internal" href="#total-supply-and-equilibrium">Total Supply and Equilibrium</a>
+    </li>
     </ul>
                 </li>
               </ul>
@@ -191,6 +193,7 @@
 <li>People can establish trust relationships with other entities (people, organizations, or groups) using the <code>trust()</code> function.</li>
 <li>Trust relationships can be set with expiration times, allowing for dynamic trust networks. Alternatively, trust can be established indefinitely by setting the expiration to the maximum possible future time.</li>
 <li>The trust network is leveraged to enable transitive transfers of Circles along paths of trust. The <code>isPermittedFlow()</code> function verifies if a transitive transfer is permissible based on the trust relationships between the involved parties and the specific currency being transferred.</li>
+<li>Circles still function as a normal token, for explicit <code>ERC1155:safe(Batch)TransferFrom()</code> or <code>ERC20:transfer()</code> no constraints of the transitive transfer of the trust network apply.</li>
 <li>Trust relationships can be established not only between individuals but also between people, organizations, and groups, creating a diverse and interconnected economic ecosystem.</li>
 </ul>
 <p>Trust networks enable:</p>
@@ -205,6 +208,8 @@
 <p>In the Hub contract, all balances and transfer amounts used as function arguments are, by default, understood as demurraged amounts for the present day. However, to facilitate interactions with other smart contracts, Circles also offers a static (non-rebalancing) token representation. This static, inflationary representation of all balances and transfer functions is available both in the ERC1155 and ERC20 representations.</p>
 <p>The Circles contract incorporates a demurrage system with the following key characteristics:</p>
 <ul>
+<li>Circles have a 7% p.a. demurrage cost applied to them in the contracts, rebalancing the amounts.</li>
+<li>Demurrage is applied on an equivalent daily basis, ensuring that during a period of a day balances are not continuously adjusted.</li>
 <li>Balances are stored as "discounted balances" that automatically decrease in value over time.</li>
 <li>The <code>calculateIssuance()</code> function in the Circles contract factors in demurrage when determining the amount of new currency to mint for an individual.</li>
 <li>Demurrage applies uniformly to both personal currencies and group currencies.</li>
@@ -217,6 +222,38 @@
 <li>Circles serves as both a robust store of value and an effective means of exchange.</li>
 </ul>
 <p>By integrating these key concepts - personal currencies, trust networks, and demurrage - Circles creates a unique economic system. This system aims to provide a fairly issued, socially-rooted monetary framework that fosters community connections and promotes active participation in the local economy.</p>
+<h2 id="total-supply-and-equilibrium">Total Supply and Equilibrium</h2>
+<p>The Circles protocol implements a unique economic model where the minting of new Circles and the demurrage mechanism work together to create an equilibrium in the total supply. This balance is crucial for maintaining the long-term stability and fairness of the system.</p>
+<p>Key aspects of the total supply mechanism:</p>
+<ol>
+<li>Issuance Rate: Each registered human can mint one Circle per hour, which translates to 24 Circles per day or 8760 Circles per year (not accounting for leap years).</li>
+<li>Demurrage Rate: All Circles undergo a 7% annual demurrage, applied on a daily basis.</li>
+<li>Equilibrium Point: The issuance and demurrage rates are carefully calibrated so that they balance each other out at a specific point, creating a maximum total supply for each personal currency.</li>
+<li>Maximum Total Supply Calculation:<ul>
+<li>Let x be the maximum total supply in Circles.</li>
+<li>Annual issuance: 8760 Circles</li>
+<li>Annual demurrage: 7% of x</li>
+<li>At equilibrium: 8760 = 0.07x</li>
+<li>Solving for x: x = 8760 / 0.07 = 125,142.86 Circles</li>
+</ul>
+</li>
+<li>Dynamic Balance: As new Circles are minted, they contribute to the total supply. However, the demurrage mechanism ensures that the total value of existing Circles decreases over time. This creates a dynamic where the total supply approaches but never exceeds the equilibrium point.</li>
+<li>Practical Implications:<ul>
+<li>For a new participant, it would take approximately 14.3 years of continuous minting to reach the maximum supply, assuming no spending.</li>
+<li>In practice, as people might not mint all their Circles, or they get burnt in usage the total supply of their personal Circles token will fluctuate below this theoretical maximum.</li>
+<li>Each person, organization, group or account can earn Circles from others though in an open economy so anyone's balance can well exceed 125k Circles by holding a variety of different Circles in their wallet.</li>
+</ul>
+</li>
+<li>System-wide Effects: While each personal currency has its own maximum supply, the trust network and transferability of Circles create a larger, interconnected economy. The total supply in effect can be thought of as a multiple of 125k CRC for every non-sybil human participating in the network.</li>
+</ol>
+<p>This equilibrium mechanism is crucial for several reasons:</p>
+<ul>
+<li>It ensures long-term stability in the value of Circles.</li>
+<li>It maintains fairness by preventing early adopters from gaining disproportionate economic power.</li>
+<li>It creates a predictable and sustainable monetary policy for the Circles ecosystem.</li>
+</ul>
+<p>The total supply mechanism is implemented through the interaction of the <code>personalMint()</code> function and the demurrage calculations in the Circles contract. The <code>calculateIssuance()</code> function takes into account both the time elapsed since the last mint and the demurrage rate to determine the appropriate amount of new Circles to issue, ensuring that the system remains in balance.
+By carefully managing the total supply through this issuance and demurrage equilibrium, Circles creates a fair, stable, and sustainable economic system that aligns with its goals of reducing inequality and fostering community connections.</p>
               
             </div>
           </div><footer>
