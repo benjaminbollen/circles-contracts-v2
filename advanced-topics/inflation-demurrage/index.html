@@ -77,6 +77,40 @@
                   <li class="toctree-l1"><a class="reference internal" href="../">Overview</a>
                   </li>
                   <li class="toctree-l1 current"><a class="reference internal current" href="#">Inflation and Demurrage</a>
+    <ul class="current">
+    <li class="toctree-l2"><a class="reference internal" href="#overview">Overview</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#key-features-of-demurrage-in-circles">Key Features of Demurrage in Circles</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#erc1155-interface-and-demurrage">ERC1155 Interface and Demurrage</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#balance-queries">Balance Queries</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#transfers">Transfers</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#token-id-convention">Token ID Convention</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#demurrage-calculation">Demurrage Calculation</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#balance-reduction">Balance Reduction</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#practical-effects">Practical Effects</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#implementation-considerations">Implementation Considerations</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#development-guidelines">Development Guidelines</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#helper-functions-for-inflationary-conversion">Helper Functions for Inflationary Conversion</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#conclusion">Conclusion</a>
+    </li>
+    </ul>
                   </li>
                   <li class="toctree-l1"><a class="reference internal" href="../path-based-transactions/">Path-based Transactions</a>
                   </li>
@@ -144,7 +178,68 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
             <div class="section" itemprop="articleBody">
               
-                
+                <h1 id="demurrage-mechanism-in-circles-developers-guide">Demurrage Mechanism in Circles: Developer's Guide</h1>
+<h2 id="overview">Overview</h2>
+<p>Circles implements demurrage as a systematic reduction of token balances over time, applied to all token balances in the system, affecting both personal and group currencies. The system extends the ERC1155 multi-token standard to incorporate this demurrage mechanism.</p>
+<p>Additionally, Circles allows wrapping ERC1155 tokens (in a demurrage representation) into an ERC20 contract. For each Circles identifier (personal or group), two ERC20 contracts can be created: one for demurrage representation and one for inflationary representation.</p>
+<h3 id="key-features-of-demurrage-in-circles">Key Features of Demurrage in Circles</h3>
+<ol>
+<li><strong>Annual Rate</strong>: 7% reduction in token balances per year</li>
+<li><strong>Daily Application</strong>: Calculated and applied on a per-day basis</li>
+<li><strong>Universal</strong>: Affects all Circles tokens equally</li>
+</ol>
+<h2 id="erc1155-interface-and-demurrage">ERC1155 Interface and Demurrage</h2>
+<p>Circles extends the standard ERC1155 interface to handle demurrage. Key functions include:</p>
+<h3 id="balance-queries">Balance Queries</h3>
+<pre><code class="language-solidity">function balanceOf(address account, uint256 id) public view returns (uint256)
+</code></pre>
+<p>Returns the current demurraged balance of <code>account</code> for token <code>id</code>. This function internally calls <code>balanceOfOnDay</code> with the current day.</p>
+<pre><code class="language-solidity">function balanceOfOnDay(address account, uint256 id, uint64 day) public view returns (uint256 balance, uint256 discountCost)
+</code></pre>
+<p>Returns the demurraged balance for <code>account</code> and <code>id</code> as of the specified <code>day</code>, along with the <code>discountCost</code> (amount of tokens "burned" due to demurrage).</p>
+<h3 id="transfers">Transfers</h3>
+<pre><code class="language-solidity">function safeTransferFrom(address from, address to, uint256 id, uint256 value, bytes memory data) public
+</code></pre>
+<p>Transfers <code>value</code> amount of token <code>id</code> from <code>from</code> to <code>to</code>, applying demurrage before transfer.</p>
+<h3 id="token-id-convention">Token ID Convention</h3>
+<p>Token IDs in Circles are derived from addresses:</p>
+<pre><code class="language-solidity">function toTokenId(address _address) public pure returns (uint256)
+</code></pre>
+<h2 id="demurrage-calculation">Demurrage Calculation</h2>
+<h3 id="balance-reduction">Balance Reduction</h3>
+<p>The system reduces token balances daily by a factor calculated as:</p>
+<pre><code>Daily Factor = (1 - 0.07)^(1/365.25) ≈ 0.99980813
+</code></pre>
+<p>This results in a compound 7% reduction over a full year.</p>
+<h3 id="practical-effects">Practical Effects</h3>
+<ul>
+<li>A balance of 100 Circles reduces to approximately 99.98081 Circles after one day</li>
+<li>Over 365 days, 100 Circles reduces to about 93 Circles</li>
+</ul>
+<h2 id="implementation-considerations">Implementation Considerations</h2>
+<ol>
+<li><strong>On-Demand Calculation</strong>: Balance reductions are computed when balances are accessed or modified, not on a fixed schedule.</li>
+<li><strong>Token Burning</strong>: The reduction in balance effectively burns tokens, removing them from circulation.</li>
+<li><strong>Gas Efficiency</strong>: On-demand calculation avoids the need for daily update transactions.</li>
+<li><strong>Precision</strong>: Fixed-point arithmetic ensures high accuracy in calculations.</li>
+</ol>
+<h2 id="development-guidelines">Development Guidelines</h2>
+<ol>
+<li>Always use <code>balanceOf()</code> or <code>balanceOfOnDay()</code> to get current, demurraged balances.</li>
+<li>On the hub contract, all amounts are to be understood as demurraged amounts on the current day.</li>
+<li>Be aware that token balances decrease over time, even without explicit transfers or actions.</li>
+</ol>
+<h2 id="helper-functions-for-inflationary-conversion">Helper Functions for Inflationary Conversion</h2>
+<p>Circles provides two helper functions to convert between demurraged and inflationary representations:</p>
+<pre><code class="language-solidity">function convertInflationaryToDemurrageValue(uint256 _amount, uint64 _currentDay) public view returns (uint256)
+</code></pre>
+<p>Converts an inflationary amount to its demurraged equivalent as of the specified day.</p>
+<pre><code class="language-solidity">function convertDemurrageToInflationaryValue(uint256 _amount, uint64 _currentDay) public view returns (uint256)
+</code></pre>
+<p>Converts a demurraged amount to its inflationary equivalent as of the specified day.</p>
+<p>These functions are particularly useful when interacting with external systems or when a non-demurraged representation is needed for certain calculations or displays.</p>
+<h2 id="conclusion">Conclusion</h2>
+<p>Understanding the demurrage mechanism is crucial for developers working with Circles. Always consider the time-dependent nature of token balances and use the provided functions to ensure accurate balance calculations and transfers.</p>
               
             </div>
           </div><footer>
