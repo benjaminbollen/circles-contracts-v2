@@ -118,9 +118,21 @@
     </li>
         </ul>
     </li>
-    <li class="toctree-l2"><a class="reference internal" href="#trust-and-permissions">Trust and Permissions</a>
+    <li class="toctree-l2"><a class="reference internal" href="#trust-and-consented-flow">Trust and Consented Flow</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#trust-implies-a-flow-edge">Trust Implies a Flow Edge</a>
     </li>
-    <li class="toctree-l2"><a class="reference internal" href="#challenges-and-considerations">Challenges and Considerations</a>
+    <li class="toctree-l3"><a class="reference internal" href="#consented-flow">Consented Flow</a>
+        <ul>
+    <li class="toctree-l4"><a class="reference internal" href="#key-aspects-of-consented-flow">Key Aspects of Consented Flow</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#behaviour-details">Behaviour Details</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#implications-of-consented-flow">Implications of Consented Flow</a>
+    </li>
+        </ul>
+    </li>
+        </ul>
     </li>
     <li class="toctree-l2"><a class="reference internal" href="#conclusion">Conclusion</a>
     </li>
@@ -410,25 +422,89 @@ for every vertex the sum over all flow edges (modulo Circles Id) must equal the 
 <h3 id="implications-and-benefits">Implications and Benefits</h3>
 <ul>
 <li><strong>Dynamic Token Creation</strong>: Allows for the creation of new group tokens as part of complex transfer paths.</li>
-<li><strong>Increased Liquidity</strong>: Facilitates the conversion from personal (or group Circles) into (other) group Circles within a single flow edge. Group Circles are likely to be trusted by more and hence accepted by more, reducing the number of hops in the graph a path needs to include to reach far away recipients.</li>
+<li><strong>Increased Liquidity</strong>: Facilitates the conversion from personal (or group Circles) into (other) group Circles within a single flow edge. Group Circles are likely to be trusted by more and hence accepted by more, reducing the number of hops in the graph a path needs to traverse to reach far away recipients.</li>
 <li><strong>Flexible Economic Structures</strong>: Enables more complex economic interactions and structures within the Circles ecosystem.</li>
 <li><strong>Seamless Integration</strong>: Group minting is seamlessly integrated into the path-based transaction system, requiring no special handling from the transaction initiator.</li>
 </ul>
-<p>This feature significantly enhances the capabilities of path-based transactions in Circles, allowing for dynamic and flexible token interactions that can adapt to the needs of the network and its participants.</p>
-<h2 id="trust-and-permissions">Trust and Permissions</h2>
-<p>The system uses two key functions to manage trust and permissions:</p>
+<p>This feature significantly enhances the capabilities of path-based transactions in Circles, allowing for dynamic and flexible token interactions that can adapt to the needs of the network and its participants.
+[Previous content remains unchanged]</p>
+<h2 id="trust-and-consented-flow">Trust and Consented Flow</h2>
+<h3 id="trust-implies-a-flow-edge">Trust Implies a Flow Edge</h3>
+<p>The default behavior for Circles is such that if one avatar trusts another avatar, they attest that:</p>
 <ol>
-<li><code>isTrusted(address _truster, address _trustee)</code>: Checks if the truster trusts the trustee.</li>
-<li><code>isPermittedFlow(address _to, address _circlesAvatar)</code>: Ensures both that the receiver trusts the Circles being sent and that the Circles avatar trusts the receiver.</li>
+<li>
+<p><strong>Token Acceptance</strong>: They are willing to accept the trusted avatar's personal Circles tokens as payment.</p>
+</li>
+<li>
+<p><strong>Implicit Flow Permission</strong>: They allow their balance of the trusted avatar's tokens to be used in path-based transactions, potentially without their direct involvement in each transaction.</p>
+</li>
+<li>
+<p><strong>Network Facilitation</strong>: They contribute to the overall liquidity and connectivity of the Circles network by creating a potential path for transactions.</p>
+</li>
+<li>
+<p><strong>Value Recognition</strong>: They recognize some form of value or merit in the trusted avatar's economic activity or contribution to the community.</p>
+</li>
+<li>
+<p><strong>Transitive Trust</strong>: While not directly trusting the entire network of the trusted avatar, they implicitly allow for multi-hop transactions that may involve avatars further down the trust chain.</p>
+</li>
+<li>
+<p><strong>Time-Bound Relationship</strong>: Trust relationships have an expiry time, allowing for dynamic changes in the trust network over time.</p>
+</li>
 </ol>
-<h2 id="challenges-and-considerations">Challenges and Considerations</h2>
+<p>This default behavior enables the Circles system to create paths for transactions between avatars who may not directly trust each other, facilitating a more interconnected and fluid economy.</p>
+<h3 id="consented-flow">Consented Flow</h3>
+<p>Consented flow is an advanced feature in the Circles ecosystem that provides additional control over path-based transfers. It's an opt-in mechanism that allows people (and groups or organizations) to have more granular control over how their Circles tokens are used in path-based transactions.</p>
+<h4 id="key-aspects-of-consented-flow">Key Aspects of Consented Flow</h4>
 <ol>
-<li><strong>Complexity</strong>: Path-based transactions involve multiple checks and operations, making them computationally intensive.</li>
-<li><strong>Gas Costs</strong>: The complexity of these transactions can lead to higher gas costs, which needs to be balanced against the benefits of the system.</li>
-<li><strong>Trust Dynamics</strong>: The system relies on up-to-date trust relationships, which can change over time.</li>
+<li><strong>Opt-In Feature</strong>: Avatars must explicitly enable consented flow by setting an advanced usage flag.</li>
+<li><strong>Bidirectional Trust Requirement</strong>: When consented flow is enabled, a valid flow edge requires:<ul>
+<li>The receiver trusts the Circles avatar of the tokens being sent (standard requirement).</li>
+<li>The sender trusts the receiver.</li>
+<li>The receiver must also have consented flow enabled.</li>
+</ul>
+</li>
+<li><strong>Recursive Protection</strong>: The requirement for the receiver to also have consented flow enabled ensures that the protection extends through multiple hops in a transaction path, for those flow edges that enter a region of consented flow.</li>
+<li><strong>Enhanced Control</strong>: Provides more precise control over how an avatar's tokens can be used in the network, potentially reducing unexpected or undesired token movements.</li>
+<li><strong>Impact on Liquidity</strong>: While offering more security, consented flow may make some transactions more challenging to complete, as it requires more tightly-knit web of trust relationships.</li>
 </ol>
+<h4 id="behaviour-details">Behaviour Details</h4>
+<p>The <code>isPermittedFlow</code> function in the Hub contract implements the logic for checking whether a flow edge is permitted (with or without consented flow enabled for the sender):</p>
+<ol>
+<li><strong>Basic Trust Check</strong>: <ul>
+<li>Always checks if the receiver trusts the Circles being sent.</li>
+<li>If this basic trust doesn't exist, the flow is never permitted.</li>
+</ul>
+</li>
+<li><strong>Consented Flow Check</strong>:<ul>
+<li>If the sender has consented flow enabled (checked via <code>advancedUsageFlags</code>), additional checks are performed:<ol>
+<li>The sender must trust the receiver.</li>
+<li>The receiver must also have consented flow enabled.</li>
+</ol>
+</li>
+</ul>
+</li>
+<li><strong>Return Value</strong>: <ul>
+<li>Returns <code>true</code> if the flow is permitted based on the above checks.</li>
+<li>Returns <code>false</code> otherwise.</li>
+</ul>
+</li>
+</ol>
+<h4 id="implications-of-consented-flow">Implications of Consented Flow</h4>
+<ol>
+<li><strong>Enhanced Security</strong>: Provides an additional layer of control for avatars concerned about unauthorized use of their tokens.</li>
+<li><strong>Potential Complexity</strong>: May increase the complexity of finding valid paths for transactions, especially if a sender with consented flow is trying to send tokens to a receiver outside the consented flow perimeter (ie. a receiver without consented flow enabled). The sender may be required to sandwich their path-transfer between disabling and re-enabling consented flow for themselves, so that their path can start from outside the local consented flow perimeter.</li>
+<li><strong>Network Dynamics</strong>: Could influence the overall structure and behavior of the Circles trust network, potentially leading to more tightly-knit, high-trust sub-networks.</li>
+<li><strong>Flexibility</strong>: Allows for different trust models within the same network, catering to varying preferences for control and openness.</li>
+</ol>
+<p>Consented flow represents an advanced usage of the Circles system, allowing for a more nuanced approach to trust and token flow within the network. It balances the need for additional control with the system's goal of creating a fluid, interconnected economy.</p>
 <h2 id="conclusion">Conclusion</h2>
-<p>Path-based transactions and flow matrices form the backbone of Circles' unique approach to creating a trust-based economy. By enabling multi-hop transfers through trust networks, Circles can facilitate transactions between individuals who don't directly trust each other, expanding the utility and reach of the system.</p>
+<p>The Circles ecosystem implements path-based transactions using flow matrices to enable multi-hop transfers of personal and group tokens. This system allows for:</p>
+<ol>
+<li>Complex transfers between indirectly connected avatars</li>
+<li>Automatic group token minting within transaction paths</li>
+<li>Flexible trust models, including opt-in consented flow for enhanced control</li>
+</ol>
+<p>These mechanisms collectively form a decentralized currency network capable of supporting diverse economic interactions and trust relationships. The technical infrastructure provides a foundation for a social currency system that can adapt to various community needs and transaction complexities.</p>
               
             </div>
           </div><footer>
