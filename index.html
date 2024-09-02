@@ -59,69 +59,13 @@
                 <li class="toctree-l1"><a class="reference internal" href="architecture/">Architectural Overview</a>
                 </li>
               </ul>
-              <p class="caption"><span class="caption-text">Core Functionality</span></p>
-              <ul>
-                  <li class="toctree-l1"><a class="reference internal" href="core-functionality/">Overview</a>
-                  </li>
-                  <li class="toctree-l1"><a class="reference internal" href="core-functionality/hub-contract/">Hub Contract</a>
-                  </li>
-                  <li class="toctree-l1"><a class="reference internal" href="core-functionality/circles-contract/">Circles Contract</a>
-                  </li>
-              </ul>
-              <ul>
-                <li class="toctree-l1"><a class="reference internal" href="key-features/">Key Features</a>
-                </li>
-              </ul>
-              <ul>
-                <li class="toctree-l1"><a class="reference internal" href="contract-interactions/">Contract Interactions</a>
-                </li>
-              </ul>
               <p class="caption"><span class="caption-text">Advanced Topics</span></p>
               <ul>
-                  <li class="toctree-l1"><a class="reference internal" href="advanced-topics/">Overview</a>
-                  </li>
                   <li class="toctree-l1"><a class="reference internal" href="advanced-topics/inflation-demurrage/">Inflation and Demurrage</a>
                   </li>
                   <li class="toctree-l1"><a class="reference internal" href="advanced-topics/path-based-transactions/">Path-based Transactions</a>
                   </li>
                   <li class="toctree-l1"><a class="reference internal" href="advanced-topics/group-mint-policies/">Group Mint Policies</a>
-                  </li>
-              </ul>
-              <p class="caption"><span class="caption-text">User Guides</span></p>
-              <ul>
-                  <li class="toctree-l1"><a class="reference internal" href="user-guides/">Overview</a>
-                  </li>
-                  <li class="toctree-l1"><a class="reference internal" href="user-guides/registration/">Registration</a>
-                  </li>
-                  <li class="toctree-l1"><a class="reference internal" href="user-guides/trust-management/">Trust Management</a>
-                  </li>
-                  <li class="toctree-l1"><a class="reference internal" href="user-guides/minting-transferring/">Minting and Transferring</a>
-                  </li>
-                  <li class="toctree-l1"><a class="reference internal" href="user-guides/group-currencies/">Group Currencies</a>
-                  </li>
-              </ul>
-              <p class="caption"><span class="caption-text">Developer Resources</span></p>
-              <ul>
-                  <li class="toctree-l1"><a class="reference internal" href="developer-resources/">Overview</a>
-                  </li>
-                  <li class="toctree-l1"><a class="reference internal" href="developer-resources/contract-abis/">Contract ABIs</a>
-                  </li>
-                  <li class="toctree-l1"><a class="reference internal" href="developer-resources/integration-guidelines/">Integration Guidelines</a>
-                  </li>
-                  <li class="toctree-l1"><a class="reference internal" href="developer-resources/best-practices/">Best Practices</a>
-                  </li>
-              </ul>
-              <ul>
-                <li class="toctree-l1"><a class="reference internal" href="glossary/">Glossary</a>
-                </li>
-              </ul>
-              <p class="caption"><span class="caption-text">Appendices</span></p>
-              <ul>
-                  <li class="toctree-l1"><a class="reference internal" href="appendices/">Overview</a>
-                  </li>
-                  <li class="toctree-l1"><a class="reference internal" href="appendices/contract-addresses/">Contract Addresses</a>
-                  </li>
-                  <li class="toctree-l1"><a class="reference internal" href="appendices/external-resources/">External Resources</a>
                   </li>
               </ul>
       </div>
@@ -151,107 +95,73 @@
 <p>Welcome to the Circles documentation. This guide will help you understand the Circles project, its architecture, and core functionalities.</p>
 <h2 id="table-of-contents">Table of Contents</h2>
 <ol>
-<li>
-<p><a href="introduction/">Introduction to Circles</a></p>
-<ul>
+<li><a href="introduction/">Introduction to Circles</a><ul>
 <li>Brief overview of the Circles project</li>
 <li>Purpose and goals of Circles</li>
 <li>Key concepts: personal currencies, trust networks, and demurrage</li>
 <li>Total Supply and Equilibrium</li>
 </ul>
 </li>
-<li>
-<p><a href="architecture/">Architectural Overview</a></p>
-<ul>
-<li>High-level system architecture</li>
-<li>Key components:<ul>
-<li>Hub contract</li>
-<li>Circles contract</li>
-<li>ERC1155 implementation</li>
-</ul>
-</li>
-<li>Relationship between components</li>
-</ul>
-</li>
-<li>
-<p><a href="core-functionality/">Core Functionality</a></p>
-<ol>
-<li>
-<p><a href="core-functionality/hub-contract/">Hub Contract (Hub.sol)</a></p>
-<ul>
-<li>Avatar registration (humans, organizations, groups)</li>
-<li>Trust system</li>
-<li>Minting and issuance</li>
-<li>Token transfers and path-based transactions</li>
-<li>Migration from v1</li>
-</ul>
-</li>
-<li>
-<p><a href="core-functionality/circles-contract/">Circles Contract (Circles.sol)</a></p>
-<ul>
-<li>Issuance mechanism</li>
-<li>Demurrage implementation</li>
-<li>Personal minting</li>
-<li>Balance management</li>
-</ul>
-</li>
 </ol>
-</li>
-<li>
-<p><a href="key-features/">Key Features</a></p>
-<ul>
-<li>Multi-token support (ERC1155)</li>
-<li>Demurraged balances</li>
-<li>Trust-based transfers</li>
-<li>Group currencies and mint policies</li>
-<li>Migration from v1 to v2</li>
-</ul>
-</li>
-<li>
-<p><a href="contract-interactions/">Contract Interactions</a></p>
-<ul>
-<li>Inheritance structure and responsibilities</li>
-</ul>
-</li>
-<li>
-<p><a href="advanced-topics/">Advanced Topics</a></p>
-<ul>
+<!-- 
+2. [Architectural Overview](architecture.md)
+    - High-level system architecture
+    - Key components:
+        - Hub contract
+        - Circles contract
+        - ERC1155 implementation
+    - Relationship between components
+
+3. [Core Functionality](core-functionality/index.md)
+    1. [Hub Contract (Hub.sol)](core-functionality/hub-contract.md)
+        - Avatar registration (humans, organizations, groups)
+        - Trust system
+        - Minting and issuance
+        - Token transfers and path-based transactions
+        - Migration from v1
+
+    2. [Circles Contract (Circles.sol)](core-functionality/circles-contract.md)
+        - Issuance mechanism
+        - Demurrage implementation
+        - Personal minting
+        - Balance management
+
+4. [Key Features](key-features.md)
+    - Multi-token support (ERC1155)
+    - Demurraged balances
+    - Trust-based transfers
+    - Group currencies and mint policies
+    - Migration from v1 to v2
+
+5. [Contract Interactions](contract-interactions.md)
+    - Inheritance structure and responsibilities -->
+
+<ol>
+<li><a href="advanced-topics/">Advanced Topics</a><ul>
 <li><a href="advanced-topics/inflation-demurrage/">Inflation and demurrage calculations</a></li>
 <li><a href="advanced-topics/path-based-transactions/">Path-based transactions and flow matrices</a></li>
 <li><a href="advanced-topics/group-mint-policies/">Group mint policies and treasuries</a></li>
 </ul>
 </li>
-<li>
-<p><a href="user-guides/">User Guides</a></p>
-<ul>
-<li><a href="user-guides/registration/">How to register as a human, organization, or group</a></li>
-<li><a href="user-guides/trust-management/">Managing trust relationships</a></li>
-<li><a href="user-guides/minting-transferring/">Minting and transferring Circles</a></li>
-<li><a href="user-guides/group-currencies/">Interacting with group currencies</a></li>
-</ul>
-</li>
-<li>
-<p><a href="developer-resources/">Developer Resources</a></p>
-<ul>
-<li><a href="developer-resources/contract-abis/">Contract ABIs</a></li>
-<li><a href="developer-resources/integration-guidelines/">Integration guidelines</a></li>
-<li><a href="developer-resources/best-practices/">Best practices for interacting with Circles contracts</a></li>
-</ul>
-</li>
-<li>
-<p><a href="glossary/">Glossary of Terms</a></p>
-<ul>
-<li>Definitions of key concepts and terminology used in Circles</li>
-</ul>
-</li>
-<li>
-<p><a href="appendices/">Appendices</a></p>
-<ul>
-<li><a href="appendices/contract-addresses/">Contract addresses</a></li>
-<li><a href="appendices/external-resources/">Relevant external resources and links</a></li>
-</ul>
-</li>
 </ol>
+<!-- 
+7. [User Guides](user-guides/index.md)
+    - [How to register as a human, organization, or group](user-guides/registration.md)
+    - [Managing trust relationships](user-guides/trust-management.md)
+    - [Minting and transferring Circles](user-guides/minting-transferring.md)
+    - [Interacting with group currencies](user-guides/group-currencies.md)
+
+8. [Developer Resources](developer-resources/index.md)
+    - [Contract ABIs](developer-resources/contract-abis.md)
+    - [Integration guidelines](developer-resources/integration-guidelines.md)
+    - [Best practices for interacting with Circles contracts](developer-resources/best-practices.md)
+
+9. [Glossary of Terms](glossary.md)
+    - Definitions of key concepts and terminology used in Circles
+
+10. [Appendices](appendices/index.md)
+    - [Contract addresses](appendices/contract-addresses.md)
+    - [Relevant external resources and links](appendices/external-resources.md) -->
               
             </div>
           </div><footer>
@@ -300,5 +210,5 @@
 
 <!--
 MkDocs version : 1.6.1
-Build Date UTC : 2024-08-31 19:59:44.675290+00:00
+Build Date UTC : 2024-09-02 11:00:06.076586+00:00
 -->
