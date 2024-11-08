@@ -2,16 +2,18 @@
 pragma solidity >=0.8.24;
 
 import "@openzeppelin/contracts/proxy/ERC1967/ERC1967Proxy.sol";
+
 interface IUpgradeableRenounceableProxy {
     function implementation() external view returns (address);
     function upgradeToAndCall(address _newImplementation, bytes memory _data) external;
     function renounceUpgradeability() external;
 }
+
 contract UpgradeableRenounceableProxy is ERC1967Proxy {
     // Errors
 
     error BlockReceive();
-    
+
     // Constants
 
     /// @dev Initial proxy admin.
