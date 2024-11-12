@@ -4,10 +4,10 @@ pragma solidity >=0.8.24;
 import {Test} from "forge-std/Test.sol";
 import {StdCheats} from "forge-std/StdCheats.sol";
 import "forge-std/console.sol";
-import "../setup/HumanRegistration.sol";
+import "../setup/AvatarCreation.sol";
 import "./MockNameRegistry.sol";
 
-contract NamesTest is Test, HumanRegistration {
+contract NamesTest is Test, AvatarCreation {
     // Constants
 
     // IPFS hash for Ubuntu 20.04, random CIDv0
@@ -22,7 +22,7 @@ contract NamesTest is Test, HumanRegistration {
 
     // Constructor
 
-    constructor() HumanRegistration(4) {}
+    constructor() AvatarCreation(4) {}
 
     // Setup
 

@@ -7,18 +7,18 @@ import "forge-std/console.sol";
 import "../../src/hub/Hub.sol";
 import "../../src/hub/TypeDefinitions.sol";
 import "../setup/TimeCirclesSetup.sol";
-import "../setup/HumanRegistration.sol";
+import "../setup/AvatarCreation.sol";
 import "../utils/Approximation.sol";
 import "./MockPathTransferHub.sol";
 
-contract HubPathTransferTest is Test, TimeCirclesSetup, HumanRegistration, Approximation {
+contract HubPathTransferTest is Test, TimeCirclesSetup, AvatarCreation, Approximation {
     // State variables
 
     MockPathTransferHub public mockHub;
 
     // Constructor
 
-    constructor() HumanRegistration(4) {}
+    constructor() AvatarCreation(4) {}
 
     // Setup
 

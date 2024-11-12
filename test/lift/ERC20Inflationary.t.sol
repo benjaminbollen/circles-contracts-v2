@@ -6,12 +6,12 @@ import {StdCheats} from "forge-std/StdCheats.sol";
 import "forge-std/console.sol";
 import "../../src/circles/Demurrage.sol";
 import "../setup/TimeCirclesSetup.sol";
-import "../setup/HumanRegistration.sol";
+import "../setup/AvatarCreation.sol";
 import "../hub/MockDeployment.sol";
 import "../hub/MockHub.sol";
 import "../utils/Approximation.sol";
 
-contract ERC20LiftTest is Test, TimeCirclesSetup, HumanRegistration, Approximation {
+contract ERC20LiftTest is Test, TimeCirclesSetup, AvatarCreation, Approximation {
     // State variables
 
     MockDeployment public mockDeployment;
@@ -21,7 +21,7 @@ contract ERC20LiftTest is Test, TimeCirclesSetup, HumanRegistration, Approximati
 
     // Constructor
 
-    constructor() HumanRegistration(2) {}
+    constructor() AvatarCreation(2) {}
 
     // Setup
 
