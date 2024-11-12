@@ -28,7 +28,6 @@ contract UpgradeableRenounceableProxy is ERC1967Proxy {
         ADMIN_INIT = msg.sender;
     }
 
-
     /// @dev Handles proxy function calls: attempts to dispatch to a specific
     ///      function or delegates all calls to the implementation contract.
     function _fallback() internal virtual override {
