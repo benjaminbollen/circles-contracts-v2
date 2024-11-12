@@ -28,12 +28,20 @@ contract UpgradeableRenounceableProxy is ERC1967Proxy {
         ADMIN_INIT = msg.sender;
     }
 
-    function implementation() external view returns (address) {
-        return _implementation();
-    }
 
-    /// @dev Dispatch if caller is admin.
+    /// @dev Handles proxy function calls: attempts to dispatch to a specific
+    ///      function or delegates all calls to the implementation contract.
     function _fallback() internal virtual override {
+        // staticcall implementation() returns the address
+        if (msg.sig == IUpgradeableRenounceableProxy.implementation.selector) {
+            bytes32 slot = ERC1967Utils.IMPLEMENTATION_SLOT;
+            assembly {
+                let implementation := sload(slot)
+                mstore(0, shr(12, shl(12, implementation)))
+                return(0, 0x20)
+            }
+        }
+        // dispatch if caller is admin, otherwise delegate to the implementation
         if (msg.sender == ADMIN_INIT && msg.sender == ERC1967Utils.getAdmin()) {
             _dispatchAdmin();
         } else {
