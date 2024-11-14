@@ -5,7 +5,7 @@ import {Test} from "forge-std/Test.sol";
 import {StdCheats} from "forge-std/StdCheats.sol";
 import "forge-std/console.sol";
 import "../../src/errors/Errors.sol";
-import "./setup.sol";
+import "./groupSetup.sol";
 
 contract CompositeMintGroupsTest is Test, GroupSetup, IHubErrors {
     // State variables
