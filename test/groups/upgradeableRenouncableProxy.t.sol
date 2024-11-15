@@ -11,8 +11,6 @@ import "./groupSetup.sol";
 contract UpgradeableRenounceableProxyTest is Test, GroupSetup {
     // State variables
     address group;
-    
-    // UpgradeableRenounceableProxy public policyProxy;
 
     // Constructor
 
