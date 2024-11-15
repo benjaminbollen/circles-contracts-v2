@@ -10,7 +10,7 @@ import "./groupSetup.sol";
 
 contract UpgradeableRenounceableProxyTest is Test, GroupSetup {
     // State variables
-    address group;
+    address public group;
 
     // Constructor
 
@@ -19,14 +19,20 @@ contract UpgradeableRenounceableProxyTest is Test, GroupSetup {
     // Setup
 
     function setUp() public {
+        // first 35 addresses are registered as human
+        // in mock deployment, with 14 days of mint
         groupSetup();
 
-        group = addresses[39];
+        group = addresses[36];
     }
 
-    // // Tests
+    // Tests
 
-    // function testProxyGroup() public {
-
-    // }
+    function testRegisterGroupWithProxyPolicy() public {
+        // create a proxy deployment with the mint policy as implementation
+        vm.startPrank(group);
+        UpgradeableRenounceableProxy proxy = new UpgradeableRenounceableProxy(mintPolicy, "");
+        hub.registerGroup(address(proxy), "ProxyPolicyGroup", "PPG", bytes32(0));
+        vm.stopPrank();
+    }
 }
