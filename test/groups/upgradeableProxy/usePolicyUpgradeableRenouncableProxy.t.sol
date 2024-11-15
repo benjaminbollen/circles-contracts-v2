@@ -4,11 +4,11 @@ pragma solidity >=0.8.13;
 import {Test} from "forge-std/Test.sol";
 import {StdCheats} from "forge-std/StdCheats.sol";
 import "forge-std/console.sol";
-import "../../src/groups/UpgradeableRenounceableProxy.sol";
-import "../../src/errors/Errors.sol";
-import "./groupSetup.sol";
+import "../../../src/groups/UpgradeableRenounceableProxy.sol";
+import "../../../src/errors/Errors.sol";
+import "../groupSetup.sol";
 
-contract UpgradeableRenounceableProxyTest is Test, GroupSetup {
+contract usePolicyUpgradeableRenounceableProxyTest is Test, GroupSetup {
     // State variables
     address public group;
 
