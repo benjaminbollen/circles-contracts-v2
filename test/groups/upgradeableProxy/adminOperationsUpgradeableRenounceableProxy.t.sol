@@ -3,12 +3,17 @@ pragma solidity >=0.8.13;
 
 import {Test} from "forge-std/Test.sol";
 import {StdCheats} from "forge-std/StdCheats.sol";
+import {StorageSlot} from "@openzeppelin/contracts/utils/StorageSlot.sol";
 import "forge-std/console.sol";
 import "../../../src/groups/UpgradeableRenounceableProxy.sol";
 import "../../../src/errors/Errors.sol";
 import "../groupSetup.sol";
 
 contract adminOperationsUpgradeableRenounceableProxy is Test, GroupSetup {
+    // Constants
+
+    bytes32 internal constant ADMIN_SLOT = 0xb53127684a568b3173ae13b9f8a6016e243e63b6e8ee1178d6a717850b5d6103;
+
     // State variables
 
     address public group;
@@ -51,7 +56,8 @@ contract adminOperationsUpgradeableRenounceableProxy is Test, GroupSetup {
      *       - test admin cannot be changed
      *       - test noone else can call upgradeToAndCall
      *       - test upgradeToAndCall with call data
-     *       - test renouncing admin
+     *       - test renouncing admin (DONE)
+     *       - test accessibility of interface functions from non-Admin callers
      */
 
     function testUpgradeToAndCall() public {
@@ -71,6 +77,24 @@ contract adminOperationsUpgradeableRenounceableProxy is Test, GroupSetup {
 
         // test minting to group with new policy
         _testGroupMintOwnCollateral(addresses[0], group, 1 * CRC);
+    }
+
+    function testRenounceAdmin() public {
+        // todo: it's not trivial (or impossible?) to read the ADMIN_SLOT from the proxy from a test contract
+        // this can only be read over the RPC?
+        // So for now, just test that after renouncing the admin, the group is no longer able to upgrade
+        // To properly test this, we need to mock the proxy to have an admin() func
+        // But we can also see this in the test trace, so maybe not necessary
+
+        // renounce admin
+        vm.prank(group);
+        proxy.renounceUpgradeability();
+
+        // expect revert when trying to upgrade to implementation 0xdead
+        vm.startPrank(group);
+        vm.expectRevert();
+        proxy.upgradeToAndCall(address(0xdead), "");
+        vm.stopPrank();
     }
 
     // Internal functions
