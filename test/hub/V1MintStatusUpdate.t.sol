@@ -9,11 +9,11 @@ import "../../src/migration/IToken.sol";
 import "../../src/migration/Migration.sol";
 import "../../src/names/NameRegistry.sol";
 import "../setup/TimeCirclesSetup.sol";
-import "../setup/HumanRegistration.sol";
+import "../setup/AvatarCreation.sol";
 import "../migration/MockHub.sol";
 import "./MockMigrationHub.sol";
 
-contract V1MintStatusUpdateTest is Test, TimeCirclesSetup, HumanRegistration {
+contract V1MintStatusUpdateTest is Test, TimeCirclesSetup, AvatarCreation {
     // State variables
 
     MockMigrationHub public mockHub;
@@ -24,7 +24,7 @@ contract V1MintStatusUpdateTest is Test, TimeCirclesSetup, HumanRegistration {
 
     // Constructor
 
-    constructor() HumanRegistration(2) {}
+    constructor() AvatarCreation(2) {}
 
     // Setup
 

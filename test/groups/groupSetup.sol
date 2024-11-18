@@ -2,12 +2,12 @@
 pragma solidity >=0.8.13;
 
 import "../../src/groups/BaseMintPolicy.sol";
-import "../setup/HumanRegistration.sol";
+import "../setup/AvatarCreation.sol";
 import "../setup/TimeCirclesSetup.sol";
 import "../hub/MockDeployment.sol";
 import "../hub/MockHub.sol";
 
-contract GroupSetup is TimeCirclesSetup, HumanRegistration {
+contract GroupSetup is TimeCirclesSetup, AvatarCreation {
     // State variables
 
     MockDeployment public mockDeployment;
@@ -16,7 +16,7 @@ contract GroupSetup is TimeCirclesSetup, HumanRegistration {
 
     // Constructor
 
-    constructor() HumanRegistration(40) {}
+    constructor() AvatarCreation(40) {}
 
     // Setup
 
