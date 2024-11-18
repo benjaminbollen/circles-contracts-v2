@@ -83,7 +83,7 @@ contract adminOperationsUpgradeableRenounceableProxy is Test, GroupSetup {
         // current admin
         address admin = address(uint160(uint256(vm.load(address(proxy), ADMIN_SLOT))));
         assertEq(admin, group);
-        
+
         // renounce admin
         vm.prank(group);
         proxy.renounceUpgradeability();
