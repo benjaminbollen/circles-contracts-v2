@@ -80,15 +80,17 @@ contract adminOperationsUpgradeableRenounceableProxy is Test, GroupSetup {
     }
 
     function testRenounceAdmin() public {
-        // todo: it's not trivial (or impossible?) to read the ADMIN_SLOT from the proxy from a test contract
-        // this can only be read over the RPC?
-        // So for now, just test that after renouncing the admin, the group is no longer able to upgrade
-        // To properly test this, we need to mock the proxy to have an admin() func
-        // But we can also see this in the test trace, so maybe not necessary
-
+        // current admin
+        address admin = address(uint160(uint256(vm.load(address(proxy), ADMIN_SLOT))));
+        assertEq(admin, group);
+        
         // renounce admin
         vm.prank(group);
         proxy.renounceUpgradeability();
+
+        // renounced admin
+        admin = address(uint160(uint256(vm.load(address(proxy), ADMIN_SLOT))));
+        assertEq(admin, address(0x1));
 
         // expect revert when trying to upgrade to implementation 0xdead
         vm.startPrank(group);
